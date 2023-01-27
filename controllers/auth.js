@@ -19,9 +19,9 @@ exports.signUp = async (req, res, next) => {
     //else
     try {
         //extract [user]
-        const {name, email} = req.body;
+        const {name, email, password} = req.body;
         //hash the password
-        const hashPw =  await bcrypt.hash(user.password, 4);
+        const hashPw =  await bcrypt.hash(password, 4);
         //create a new user
         const newUser = await User.create({name, email, password: hashPw});
         //return the newly created user

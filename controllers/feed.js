@@ -15,7 +15,7 @@ exports.getPosts = async (req, res, next) => {
         }
 
         //else send the posts
-        res.status(200).send(posts);
+        res.status(200).json({data: posts});
     }
     catch(err) {
         //if still there is a error

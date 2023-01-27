@@ -20,16 +20,16 @@ app.use(bodyParser.json());
 //set headers [origins, methods, headers]
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET, POST, PUT, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     next();
 });
 
 
 //ROUTES => validate methods
-app.use('/feed', is_valid_method, feedRoute);
-app.use('/auth', is_valid_method, authRoute);
-app.use('/user', is_valid_method, userRoute);
+app.use('/feed', feedRoute);
+app.use('/auth', authRoute);
+app.use('/user', userRoute);
 
 //when there is error
 app.use((error, req, res, next) => {
