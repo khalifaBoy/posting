@@ -3,7 +3,8 @@ const User = require('../models/user');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const original_token = 'secret';
+//set token here
+// const original_token = ;
 
 
 exports.signUp = async (req, res, next) => {
@@ -28,6 +29,38 @@ exports.signUp = async (req, res, next) => {
         res.status(201).json({message: 'User Created', id: newUser.id});
     }
     catch(err) {
+        //if still there is a error
+        if(!err.status) {
+            err.status = 500;
+        }
+        //move on
+        next(err);
+    }
+}
+
+
+exports.validateName = async (req, res, next) => {
+    try {
+        //extract name
+        const name = req.body.name;
+        //find  a user with name
+        const [nameOccupied] = await User.findAll({
+            where: {
+                name: name
+            }
+        })
+        
+        //if such user is there
+        if(nameOccupied!==undefined) {
+            const error = new Error('Name is occupied');
+            error.status = 400;
+            throw error;
+        }
+
+        //return to client with a succes case
+        res.status(200).json({message: "name is available"});
+
+    } catch(err) {
         //if still there is a error
         if(!err.status) {
             err.status = 500;
@@ -71,7 +104,7 @@ exports.logIn = async (req, res, next) => {
         //else create a token [1hr]
         const token = jwt.sign({
             email: loadedUser.email,
-            d: loadedUser.id
+            userId: loadedUser.id
         }, original_token, {expiresIn: '1h'});
         //send the token for authorization to the client
         res.status(200).json({token, userId: loadedUser.id});

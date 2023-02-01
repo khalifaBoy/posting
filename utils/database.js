@@ -1,7 +1,8 @@
 const Sequelize = require('sequelize');
 
 
-const DB_config = ['<schema>', '<user>', '<password>'];
+//set data-configuration here
+const DB_config = ['schema', 'user', 'mysql'];
 
 
 const sequelize = new Sequelize(...DB_config, {

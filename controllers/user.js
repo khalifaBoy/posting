@@ -18,9 +18,10 @@ exports.createdPost = async (req, res, next) => {
     try {
         //extract from body
         const {title, subject} = req.body;
+        const userId = req.userId;
         //create a post
         const createdPost = await Posts.create({
-            title, subject
+            title, subject, userId
         })
         //send the newly created post to the client
         res.status(201).json(createdPost);

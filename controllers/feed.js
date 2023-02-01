@@ -4,7 +4,7 @@ const Posts = require('../models/posts');
 exports.getPosts = async (req, res, next) => {
     try {
         //fetch posts from database
-        const posts = await Posts.findAll();
+        const posts = await (req.params.userId ? Posts.findAll({where: {userId: req.params.userId}}) : Posts.findAll());
 
         //if posts array is empty
         if(!posts[0]) {
@@ -15,7 +15,7 @@ exports.getPosts = async (req, res, next) => {
         }
 
         //else send the posts
-        res.status(200).json({data: posts});
+        res.status(200).send(posts);
     }
     catch(err) {
         //if still there is a error

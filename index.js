@@ -3,16 +3,16 @@ const bodyParser = require('body-parser');
 const sequelize = require('./utils/database');
 
 // MODELS
-const Posts = require('./models/posts')
-const User = require('./models/user')
-const is_valid_method = require('./middleware/is_valid_method');
+const Posts = require('./models/posts');
+const User = require('./models/user');
 
 const feedRoute = require('./routes/feed');
 const authRoute = require('./routes/auth');
 const userRoute = require('./routes/user');
 
 const app = express();
-const PORT = 8080;
+//set PORT here
+// const PORT = ;
 
 //parse the req [application/json]
 app.use(bodyParser.json());
@@ -36,7 +36,8 @@ app.use((error, req, res, next) => {
     res.status(error.status).json({message: error.message, data: error.data});
 })
 
-
+Posts.belongsTo(User);
+User.hasMany(Posts);
 
 //connect to the database
 sequelize.sync()

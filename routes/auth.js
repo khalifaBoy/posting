@@ -31,6 +31,7 @@ router.put('/signup', [
     .withMessage('name attribute can not be empty.')
 ], authController.signUp)
 
+router.post('/name', authController.validateName)
 
 router.post('/login', authController.logIn)
 

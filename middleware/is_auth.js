@@ -1,6 +1,10 @@
+// a common authorization middleware for user authorization
+
+
 const jwt = require('jsonwebtoken');
 
-const original_token = 'secret';
+//set token here
+// const original_token = ;
 
 module.exports = (req, res, next) => {
 
@@ -29,7 +33,9 @@ module.exports = (req, res, next) => {
         error.status = 402;
         throw error;
     }
-
+    
+    //store the userID from decoded token to make use later
+    req.userId = decodedToken.userId;
     //move_on
     next();
 }
